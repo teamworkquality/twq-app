@@ -17,13 +17,13 @@ class UserView(APIView):
             try:
                 user = User.objects.get(id=kwargs['user_id'])
                 user_data = UserSerializer(user)
-                return Response(user_data)
+                return Response(user_data.data)
             except ObjectDoesNotExist:
-                return Response("could not find user", status=400)
+                return Response({"error": "could not find user"}    , status=400)
         else:
             all_users = User.objects.all()
             all_users_serialized = UserSerializer(all_users, many=True)
-            return JsonResponse(all_users_serialized.data, safe=False)
+            return Response(all_users_serialized.data)
 
     def post(self, request, format=None, **kwargs):
         response = Response()
@@ -42,7 +42,7 @@ class UserView(APIView):
             user = User.objects.get(id=kwargs['user_id'])
             if user:
                 user.delete()
-                response.status_code = 200
+                response.status_code = 204
             else:
                 pass
         else:
