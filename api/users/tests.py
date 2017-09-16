@@ -52,7 +52,7 @@ class UserTestCase(TestCase):
 
         all_users = User.objects.all()
         all_users_serialized = UserSerializer(all_users, many=True)
-        self.assertEqual(all_users_serialized.data, self.response)
+        self.assertEqual(all_users_serialized.data, self.response.data)
         self.assertEqual(self.response.status_code, 200)
 
 
