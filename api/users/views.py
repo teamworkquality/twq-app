@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,13 +14,38 @@ class UserView(APIView):
 
     def get(self, request, format=None, **kwargs):
         if kwargs.get('user_id'):
-            print("id received")
+            try:
+                user = User.objects.get(id=kwargs['user_id'])
+                user_data = UserSerializer(user)
+                return Response(user_data)
+            except ObjectDoesNotExist:
+                return Response("could not find user", status=400)
         else:
-            print("list users")
-        return Response()
+            all_users = User.objects.all()
+            all_users_serialized = UserSerializer(all_users, many=True)
+            return JsonResponse(all_users_serialized.data, safe=False)
 
-    def post(self, request, user_id, format=None):
-        return Response()
+    def post(self, request, format=None, **kwargs):
+        response = Response()
+        new_user = User(**kwargs)
+        new_user.save()
 
-    def delete(self, request, user_id, format=None):
-        return Response()
+        if new_user:
+            response.status_code = 201
+        else:
+            response.status_code = 400
+        return response
+
+    def delete(self, request, format=None, **kwargs):
+        response = Response()
+        if kwargs.get("user_id"):
+            user = User.objects.get(id=kwargs['user_id'])
+            if user:
+                user.delete()
+                response.status_code = 200
+            else:
+                pass
+        else:
+            response.status_code = 400
+
+        return response
