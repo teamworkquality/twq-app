@@ -18,6 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
+//@import 'assets/custom.scss';
 @import '~bulma/bulma.sass';
 
 $backgroud-color: #e5e9f2;
