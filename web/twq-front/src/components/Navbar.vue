@@ -9,7 +9,7 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">
-        <router-link :to="item.route" class="navbar-item" v-for="item in navItems">
+        <router-link :to="item.route" :key="item.route" class="navbar-item" v-for="item in navItems">
           {{ item.title }}
         </router-link>
       </div>
