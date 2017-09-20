@@ -20,13 +20,24 @@ export default {
 <style lang="scss">
 @import '~bulma/bulma.sass';
 
+$backgroud-color: #e5e9f2;
+
+$util-values: 10, 20, 30, 40, 50;
+
+@each $i in $util-values {
+  .has-vmargin-#{$i} {
+    margin-top: #{$i}px;
+    margin-bottom: #{$i}px;
+  }
+}
+
 html,
 body {
   height: 100%;
 }
 
 #app {
-  background: #e5e9f2;
+  background: $backgroud-color;
   flex-flow: column;
   height: 100%;
 
