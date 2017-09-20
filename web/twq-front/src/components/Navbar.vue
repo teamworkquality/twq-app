@@ -22,7 +22,7 @@ export default {
   name: 'navbar',
   data: () => ({
     navItems: [
-      { title: 'Home', route: '#' },
+      { title: 'Início', route: '#' },
       { title: 'Permissões', route: '#' },
       { title: 'Formulários', route: '#' },
       { title: 'Equipes', route: '#' }
