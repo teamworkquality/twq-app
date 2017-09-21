@@ -9,28 +9,24 @@
 
 <script>
 import Navbar from '@/components/Navbar'
+import router from './router'
+
 export default {
   name: 'app',
   components: {
     'navbar': Navbar
+  },
+  beforeUpdate: function() {
+    // TODO: check if user is logged in or not.
+    // If not, redirect to login page.
+    router.replace({ name: 'Login' });
   }
 }
 </script>
 
 <style lang="scss">
-//@import 'assets/custom.scss';
+@import 'assets/custom.scss';
 @import '~bulma/bulma.sass';
-
-$backgroud-color: #e5e9f2;
-
-$util-values: 10, 20, 30, 40, 50;
-
-@each $i in $util-values {
-  .has-vmargin-#{$i} {
-    margin-top: #{$i}px;
-    margin-bottom: #{$i}px;
-  }
-}
 
 html,
 body {

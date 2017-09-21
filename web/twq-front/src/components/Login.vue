@@ -25,7 +25,7 @@
           </div>
           <div class="column">
             <div class="control">
-              <button class="button is-fullwidth">Entrar</button>
+              <button class="button is-dark is-fullwidth">Entrar</button>
             </div>
           </div>
         </form>
@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: 'hello',
+  name: 'login',
   data: () => ({
     email: '',
     password: ''
@@ -50,7 +50,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 
 </style>
