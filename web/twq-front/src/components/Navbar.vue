@@ -9,7 +9,7 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">
-        <router-link :to="item.route" :key="item.route" class="navbar-item" v-for="item in navItems">
+        <router-link :to="item.route" :key="item.route.name" class="navbar-item" v-for="item in navItems">
           {{ item.title }}
         </router-link>
       </div>
@@ -22,7 +22,7 @@ export default {
   name: 'navbar',
   data: () => ({
     navItems: [
-      { title: 'Início', route: '#' },
+      { title: 'Início', route: { name: 'Home' } },
       { title: 'Permissões', route: '#' },
       { title: 'Formulários', route: '#' },
       { title: 'Equipes', route: '#' }
