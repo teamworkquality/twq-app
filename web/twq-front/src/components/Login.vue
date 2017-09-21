@@ -2,12 +2,10 @@
   <div class="columns">
     <div class="column is-half">
       <div>
-        <p class="is-size-1">
-          Bem-vindo!
-        </p>
+        <p class="is-size-2 has-text-weight-semibold">Bem-vindo!</p>
       </div>
-      <div>
-        <p>Realize login para usufruir do sistema.</p>
+      <div class="has-vmargin-50">
+        <p class="has-text-grey">Realize login para usufruir do sistema.</p>
       </div>
       <div>
         <form v-on:submit.prevent="onSubmit()" class="columns">
@@ -38,7 +36,7 @@
 
 <script>
 export default {
-  name: 'hello',
+  name: 'login',
   data: () => ({
     email: '',
     password: ''
@@ -52,7 +50,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 
 </style>

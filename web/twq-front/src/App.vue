@@ -9,15 +9,23 @@
 
 <script>
 import Navbar from '@/components/Navbar'
+import router from './router'
+
 export default {
   name: 'app',
   components: {
     'navbar': Navbar
+  },
+  beforeUpdate: function() {
+    // TODO: check if user is logged in or not.
+    // If not, redirect to login page.
+    router.replace({ name: 'Login' });
   }
 }
 </script>
 
 <style lang="scss">
+@import 'assets/custom.scss';
 @import '~bulma/bulma.sass';
 
 html,
@@ -26,7 +34,7 @@ body {
 }
 
 #app {
-  background: #e5e9f2;
+  background: $backgroud-color;
   flex-flow: column;
   height: 100%;
 
