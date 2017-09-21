@@ -16,11 +16,11 @@ export default {
   components: {
     'navbar': Navbar
   },
-  /*beforeUpdate: function() {
+  beforeUpdate: function() {
     // TODO: check if user is logged in or not.
     // If not, redirect to login page.
     router.replace({ name: 'Login' });
-  }*/
+  }
 }
 </script>
 

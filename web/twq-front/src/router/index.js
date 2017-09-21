@@ -10,12 +10,18 @@ import Graphic from '@/components/Graphic';
 import EnvioRelatorio from '@/components/EnvioRelatorio'
 import ListarRelatorios from '@/components/ListarRelatorios'
 
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/login/',
       name: 'Login',
       component: Login
     },

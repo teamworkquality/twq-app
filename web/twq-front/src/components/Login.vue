@@ -25,7 +25,7 @@
           </div>
           <div class="column">
             <div class="control">
-              <button class="button is-dark is-fullwidth">Entrar</button>            
+              <button class="button is-dark is-fullwidth">Entrar</button>
             </div>
           </div>
         </form>
