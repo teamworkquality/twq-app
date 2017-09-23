@@ -100,6 +100,10 @@ def icc(data, icc_type):
 
 import numpy as np
 
+# data:
+#   number of elements in data = number of targets
+#   number of elements in each data element = number of judges
+
 data = np.array([
     [9,2,5,8],
     [6,1,3,2],
