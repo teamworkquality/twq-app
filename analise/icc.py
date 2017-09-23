@@ -80,13 +80,19 @@ def icc(data, icc_type):
         # k*(mean square columns - mean square error)/n)
         ICC = (BMS - EMS) / (BMS + (k-1) * EMS + k * (JMS - EMS) / n)
 
+    elif icc_type == "icc2_k":
+        # ICC(2,k) = (mean square subject - mean square error) /
+        # (mean square subject +
+        # (mean square columns - mean square error)/n))
+        ICC = (BMS - EMS) / (BMS + ((JMS + EMS) / n))
+
     elif icc_type == 'icc3_1':
         # ICC(3,1) = (mean square subject - mean square error) /
         # (mean square subject + (k-1)*mean square error)
         ICC = (BMS - EMS) / (BMS + (k-1) * EMS)
 
     elif icc_type == 'icc3_k':
-        # ICC(3,1) = (mean square subject - mean square error) /
+        # ICC(3,k) = (mean square subject - mean square error) /
         # mean square subject
         ICC = (BMS - EMS) / BMS
 
@@ -105,5 +111,6 @@ data = np.array([
 
 # print("ICC(1,1): " + str(icc(data,'icc1'))) # aprox. 0.17
 print("ICC(2,1): " + str(icc(data,'icc2_1'))) # aprox. 0.29
+print("ICC(2,k): " + str(icc(data,'icc2_k'))) # aprox. 0.62
 print("ICC(3,1): " + str(icc(data,'icc3_1'))) # aprox. 0.71
-print("ICC(3,k): " + str(icc(data,'icc3_k'))) # aprox. 0.71
+print("ICC(3,k): " + str(icc(data,'icc3_k'))) # aprox. 0.91
