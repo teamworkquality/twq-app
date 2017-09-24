@@ -24,7 +24,7 @@ export default {
     navItems: [
       { title: 'Início', route: { name: 'Home' } },
       { title: 'Permissões', route: '#' },
-      { title: 'Formulários', route: '#' },
+      { title: 'Formulários', route: 'ListarForms' },
       { title: 'Equipes', route: '#' }
     ]
   })
