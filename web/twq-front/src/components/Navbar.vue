@@ -25,7 +25,8 @@ export default {
       { title: 'Início', route: { name: 'Home' } },
       { title: 'Permissões', route: '#' },
       { title: 'Formulários', route: 'ListarForms' },
-      { title: 'Equipes', route: '#' }
+      { title: 'Equipes', route: '#' },
+      { title: 'Responder', route: 'Responder' }
     ]
   })
 }
