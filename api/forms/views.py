@@ -16,3 +16,14 @@ class FormsView(APIView):
                 return Response({"error": "could not find user"}    , status=400)
         else:
             return Response(None)
+
+    def post(self, request, format=None, **kwargs):
+        response = Response()
+        new_form = Form(**kwargs)
+        new_form.save()
+
+        if new_form:
+            response.status_code = 201
+        else:
+            response.status_code = 400
+        return response
