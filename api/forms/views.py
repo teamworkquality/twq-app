@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Form
+from .serializers import FormSerializer
 
 class FormsView(APIView):
 
@@ -19,11 +20,12 @@ class FormsView(APIView):
 
     def post(self, request, format=None, **kwargs):
         response = Response()
-        new_form = Form(**kwargs)
-        new_form.save()
+        serializer = FormSerializer(data=request.data)
 
-        if new_form:
+        if serializer.is_valid():
+            serializer.save()
             response.status_code = 201
+            response.data = serializer.validated_data
         else:
             response.status_code = 400
         return response
