@@ -66,7 +66,6 @@ def icc(data, icc_type):
     # print("SSC = " + str(SSC))
     # print("SSR = " + str(SSR))
     # print("SSW = " + str(SSW))
-    
     ICC = -1
 
     if icc_type == 'icc1':
