@@ -29,7 +29,7 @@ def icc(data, icc_type):
 
     # Degrees of Freedom
     dfb = n - 1
-    dfw = n * (k - 1)
+    # dfw = n * (k - 1)
     dfj = k - 1
     dfe = (n - 1) * (k - 1)
 
