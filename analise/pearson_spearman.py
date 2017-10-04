@@ -6,6 +6,7 @@ def spearman(data):
 	return pearson(ranked_data)
 
 def pearson(data):
+	data = data.T
 	return np.array([[correlation_xy(x,y) for y in data] for x in data])
 
 def correlation_xy(x,y):
