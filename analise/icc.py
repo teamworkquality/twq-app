@@ -1,35 +1,12 @@
 def icc(data, icc_type):
-    ''' Calculate intraclass correlation coefficient for data within
-        Brain_Data class
-
-    ICC Formulas are based on:
-    Shrout, P. E., & Fleiss, J. L. (1979). Intraclass correlations: uses in
-    assessing rater reliability. Psychological bulletin, 86(2), 420.
-
-    icc1:  x_ij = mu + beta_j + w_ij
-    icc2/3:  x_ij = mu + alpha_i + beta_j + (ab)_ij + epsilon_ij
-
-    Code modifed from nipype algorithms.icc
-    https://github.com/nipy/nipype/blob/master/nipype/algorithms/icc.py
-
-    Args:
-        icc_type: type of icc to calculate (icc: voxel random effect,
-                icc2: voxel and column random effect, icc3: voxel and
-                column fixed effect)
-
-    Returns:
-        ICC: intraclass correlation coefficient
-    '''
-
-    # n: number of targets
-    # k: number of judges
-
     Y = data
+
+    # n: number of people answering the quiz
+    # k: number of constructs in the quiz
     [n, k] = Y.shape
 
     # Degrees of Freedom
     dfb = n - 1
-    # dfw = n * (k - 1)
     dfj = k - 1
     dfe = (n - 1) * (k - 1)
 
@@ -43,8 +20,7 @@ def icc(data, icc_type):
     X = np.hstack([x, x0])
 
     # Sum Square Error
-    predicted_Y = np.dot(np.dot(np.dot(X, np.linalg.pinv(np.dot(X.T, X))),
-                         X.T), Y.flatten('F'))
+    predicted_Y = np.dot(np.dot(np.dot(X, np.linalg.pinv(np.dot(X.T, X))), X.T), Y.flatten('F'))
     residuals = Y.flatten('F') - predicted_Y
     SSE = (residuals ** 2).sum()
     EMS = SSE / dfe
@@ -57,23 +33,9 @@ def icc(data, icc_type):
     SSR = SST - SSC - SSE
     BMS = SSR / dfb
 
-    # SSW = ((Y - np.mean(Y, 0)) ** 2).sum()
-    # print((Y - np.mean(Y, 0)) ** 2)
-    # WMS = SSW / dfw
-
-    # print("SST = " + str(SST))
-    # print("SSE = " + str(SSE))
-    # print("SSC = " + str(SSC))
-    # print("SSR = " + str(SSR))
-    # print("SSW = " + str(SSW))
     ICC = -1
 
-    if icc_type == 'icc1':
-        # Not implemented yet
-        # ICC = (BMS - WMS) / (BMS + (k-1) * WMS)
-        ICC = -1
-
-    elif icc_type == 'icc2_1':
+    if icc_type == 'icc2_1':
         # ICC(2,1) = (mean square subject - mean square error) /
         # (mean square subject + (k-1)*mean square error +
         # k*(mean square columns - mean square error)/n)
@@ -81,13 +43,12 @@ def icc(data, icc_type):
 
     elif icc_type == "icc2_k":
         # ICC(2,k) = (mean square subject - mean square error) /
-        # (mean square subject +
-        # (mean square columns - mean square error)/n))
+        # (mean square subject + (mean square columns - mean square error)/n))
         ICC = (BMS - EMS) / (BMS + ((JMS + EMS) / n))
 
     elif icc_type == 'icc3_1':
         # ICC(3,1) = (mean square subject - mean square error) /
-        # (mean square subject + (k-1)*mean square error)
+        # (mean square subject + (k-1) * mean square error)
         ICC = (BMS - EMS) / (BMS + (k-1) * EMS)
 
     elif icc_type == 'icc3_k':
@@ -97,11 +58,19 @@ def icc(data, icc_type):
 
     return ICC
 
+def icc2_1(data): return icc(data, 'icc2_1')
+def icc2_k(data): return icc(data, 'icc2_k')
+def icc3_1(data): return icc(data, 'icc3_1')
+def icc3_k(data): return icc(data, 'icc3_k')
+
 import numpy as np
 
 # data:
-#   number of elements in data = number of targets
-#   number of elements in each data element = number of judges
+#   number of elements in data = number of people answering the quiz
+#   number of elements in each data element = number of questions in the quiz
+
+#   [9,2,5,8]:      answers for person 1
+#   [9,6,8,7,10,6]: answers for construct 1
 
 data = np.array([
     [9,2,5,8],
@@ -112,8 +81,7 @@ data = np.array([
     [6,2,4,7]
 ])
 
-# print("ICC(1,1): " + str(icc(data,'icc1'))) # aprox. 0.17
-print("ICC(2,1): " + str(icc(data,'icc2_1'))) # aprox. 0.29
-print("ICC(2,k): " + str(icc(data,'icc2_k'))) # aprox. 0.62
-print("ICC(3,1): " + str(icc(data,'icc3_1'))) # aprox. 0.71
-print("ICC(3,k): " + str(icc(data,'icc3_k'))) # aprox. 0.91
+print("ICC(2,1) = " + str(icc2_1(data))) # aprox. 0.29
+print("ICC(2,k) = " + str(icc2_k(data))) # aprox. 0.62
+print("ICC(3,1) = " + str(icc3_1(data))) # aprox. 0.71
+print("ICC(3,k) = " + str(icc3_k(data))) # aprox. 0.91
