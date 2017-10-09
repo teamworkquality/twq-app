@@ -1,3 +1,5 @@
+import numpy as np
+
 def icc(data, icc_type):
     Y = data
 
@@ -62,26 +64,3 @@ def icc2_1(data): return icc(data, 'icc2_1')
 def icc2_k(data): return icc(data, 'icc2_k')
 def icc3_1(data): return icc(data, 'icc3_1')
 def icc3_k(data): return icc(data, 'icc3_k')
-
-import numpy as np
-
-# data:
-#   number of elements in data = number of people answering the quiz
-#   number of elements in each data element = number of questions in the quiz
-
-#   [9,2,5,8]:      answers for person 1
-#   [9,6,8,7,10,6]: answers for construct 1
-
-data = np.array([
-    [9,2,5,8],
-    [6,1,3,2],
-    [8,4,6,8],
-    [7,1,2,6],
-    [10,5,6,9],
-    [6,2,4,7]
-])
-
-print("ICC(2,1) = " + str(icc2_1(data))) # aprox. 0.29
-print("ICC(2,k) = " + str(icc2_k(data))) # aprox. 0.62
-print("ICC(3,1) = " + str(icc3_1(data))) # aprox. 0.71
-print("ICC(3,k) = " + str(icc3_k(data))) # aprox. 0.91
