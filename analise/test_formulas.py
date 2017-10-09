@@ -1,10 +1,14 @@
 import numpy as np
 from scipy.stats import rankdata
 from scipy import stats
+import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
+import math
 
 import icc
 import pearson_spearman as ps
 import shapiro_wilk as sw
+import plot_data_normal_graph as pdng
 
 # data:
 #   number of elements in data = number of people answering the quiz
@@ -31,16 +35,19 @@ print("ICC(2,k) = " + str(icc.icc2_k(data)))
 print("ICC(3,1) = " + str(icc.icc3_1(data)))
 # 	icc(3,k):
 print("ICC(3,k) = " + str(icc.icc3_k(data)))
+
 print("")
 
 # Pearson correlation:
 print("Pearson correlation:")
 print(ps.pearson(data))
+
 print("")
 
 # Spearman correlation:
 print("Spearman correlation:")
 print(ps.spearman(data))
+
 print("")
 
 # Shapiro-Wilk test:
@@ -50,3 +57,11 @@ w, p_value = sw.shapiro_wilk(data)
 print("w       = " + str(w))
 # 	p_value:
 print("p_value = " + str(p_value))
+
+print("")
+
+# Plot normal data graph:
+print("Plot normal data graph:")
+x, mean, sigma = pdng.plot_data_normal_graph(data)
+plt.plot(x, mlab.normpdf(x, mean, sigma))
+plt.show()
