@@ -1,9 +1,6 @@
 import numpy as np
-from scipy.stats import rankdata
-from scipy import stats
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
-import math
 
 import icc
 import pearson_spearman as ps
