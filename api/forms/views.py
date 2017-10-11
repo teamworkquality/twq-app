@@ -29,3 +29,17 @@ class FormsView(APIView):
         else:
             response.status_code = 400
         return response
+
+    def delete(self, request, format=None, **kwargs):
+        response = Response()
+        if kwargs.get("form_id"):
+            form = Form.objects.get(id=kwargs['form_id'])
+            if form:
+                form.delete()
+                response.status_code = 204
+            else:
+                pass
+        else:
+            response.status_code = 400
+
+        return response
