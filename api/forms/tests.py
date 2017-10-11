@@ -2,7 +2,6 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from django.core.urlresolvers import reverse
 from .models import Form
-from .serializers import FormSerializer
 
 class FormTestCase(TestCase):
 
