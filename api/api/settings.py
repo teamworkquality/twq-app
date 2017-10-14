@@ -25,7 +25,7 @@ SECRET_KEY = '_5a3$6b@4bx4iu662*5!)xv30zvq-^72jvle_)i75l4eyw97xz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'api-twq.wedeploy.io']
 
 
 # Application definition
