@@ -1,4 +1,4 @@
-FROM python:3
+FROM frolvlad/alpine-python3
 
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /app
