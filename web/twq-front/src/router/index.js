@@ -6,6 +6,7 @@ import CriarForm from '@/components/CriarForm'
 import Home from '@/components/Home'
 import ListarForms from '@/components/ListarForms'
 import Responder from '@/components/Responder'
+import EnvioRelatorio from '@/components/EnvioRelatorio'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/Responder',
       name: 'Responder',
       component: Responder
+    },
+    {
+      path: '/envioRelatorio',
+      name: 'EnvioRelatorio',
+      component: EnvioRelatorio
     }
   ]
 })
