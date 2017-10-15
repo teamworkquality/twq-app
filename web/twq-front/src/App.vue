@@ -1,5 +1,6 @@
 <template>
-  <div id="app" class="is-flex">
+  <div id="app"
+       class="is-flex">
     <navbar></navbar>
     <div class="container">
       <router-view></router-view>
@@ -30,7 +31,9 @@ export default {
 
 html,
 body {
+  min-height: 100%;
   height: 100%;
+  background: $backgroud-color;
 }
 
 #app {
