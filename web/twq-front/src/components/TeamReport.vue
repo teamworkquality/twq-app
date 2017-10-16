@@ -51,7 +51,9 @@
       <div class="control align-right">
         <button class="button  is-dark is-medium">Exportar PDF</button>
         <button class="button  is-dark is-medium">Exportar CSV</button>
-        <button class="button  is-dark is-medium">Gerar Gráfico</button>
+        <router-link :to="{name: 'Graphic'}">
+          <button class="button  is-dark is-medium">Gerar Gráfico</button>
+        </router-link>
       </div>
     </div>
   </div>

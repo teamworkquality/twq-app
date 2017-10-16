@@ -6,7 +6,11 @@ import Home from '@/components/Home';
 import CriarForm from '@/components/CriarForm';
 import ListarForms from '@/components/ListarForms';
 import Responder from '@/components/Responder';
+
 import TeamReport from '@/components/TeamReport';
+import Graphic from '@/components/Graphic';
+import EnvioRelatorio from '@/components/EnvioRelatorio'
+import ListarRelatorios from '@/components/ListarRelatorios'
 
 Vue.use(Router);
 
@@ -41,6 +45,21 @@ export default new Router({
       path: '/reports',
       name: 'Responder',
       component: TeamReport
+    },
+    {
+      path: '/graphic',
+      name: 'Graphic',
+      component: Graphic
+    },
+    {
+      path: '/envioRelatorio',
+      name: 'EnvioRelatorio',
+      component: EnvioRelatorio
+    },
+    {
+      path: '/listarRelatorios',
+      name: 'ListarRelatorios',
+      component: ListarRelatorios
     }
   ]
 });
