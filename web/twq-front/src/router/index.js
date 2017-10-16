@@ -44,6 +44,7 @@ export default new Router({
       name: 'Graphic',
       component: Graphic
     },
+    {
       path: '/envioRelatorio',
       name: 'EnvioRelatorio',
       component: EnvioRelatorio
