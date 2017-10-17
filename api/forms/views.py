@@ -2,6 +2,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
+
 from .models import Form
 from .serializers import FormSerializer
 
@@ -43,3 +45,15 @@ class FormsView(APIView):
             response.status_code = 400
 
         return response
+
+    def update(self, request, format=None, **kwargs):
+        response = Response()
+        if kwargs.get("form_id"):
+            form = Form.objects.get(id = kwargs['form_id'])
+            if form:
+                serializer = FormSerializer(form, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
