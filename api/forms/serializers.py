@@ -5,7 +5,7 @@ from .models import Form, Question
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('text', 'min', 'max')
+        fields = ('text', 'min', 'max', 'reversed')
 
 class FormSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True)
