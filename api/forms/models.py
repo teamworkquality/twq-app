@@ -10,4 +10,4 @@ class Question(models.Model):
     text = models.TextField()
     min = models.IntegerField()
     max = models.IntegerField()
-    form = models.ForeignKey(Form)
+    form = models.ForeignKey(Form, related_name='questions')
