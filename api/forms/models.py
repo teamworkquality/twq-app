@@ -10,4 +10,5 @@ class Question(models.Model):
     text = models.TextField()
     min = models.IntegerField()
     max = models.IntegerField()
+    reversed = models.BooleanField()
     form = models.ForeignKey(Form, related_name='questions')
