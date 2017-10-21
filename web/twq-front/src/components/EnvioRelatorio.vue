@@ -64,6 +64,7 @@ export default {
   	selected: 'ABC',
   	nomes: [{nome: 'Renata'}, {nome: 'Bianca'}, {nome: 'Roberto'}],
   	equipesN: [{equip: 'Individual'}, {equip: 'Time'}]
+
      
   }),
   methods: {
