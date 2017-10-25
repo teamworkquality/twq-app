@@ -63,7 +63,8 @@ export default {
   	novoForm: [],
   	selected: 'ABC',
   	nomes: [{nome: 'Renata'}, {nome: 'Bianca'}, {nome: 'Roberto'}],
-  	equipesN: [{equip: 'ABC'}, {equip: 'DEF'}, {equip: 'GHI'}]
+  	equipesN: [{equip: 'Individual'}, {equip: 'Time'}]
+
      
   }),
   methods: {

@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "bulma": "^0.5.2",
+    "chart.js": "^2.7.0",
     "vue": "^2.4.2",
+    "vue-chartjs": "^3.0.0",
     "vue-router": "^2.7.0"
   },
   "devDependencies": {

@@ -45,6 +45,7 @@ export default {
     onSubmit() {
       console.log(this.email)
       console.log(this.password)
+
     }
   }
 }
