@@ -1,12 +1,10 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from companies.models import Company
-from companies.models import Team
-from companies.serializers import CompanySerializer
-from companies.serializers import TeamSerializer
+from .models import Company
+from .models import Team
+from .serializers import TeamSerializer
 
 class TeamView(APIView):
 
