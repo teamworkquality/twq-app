@@ -16,10 +16,14 @@ class FormsView(APIView):
             except ObjectDoesNotExist:
                 return Response({"error": "could not find user"}    , status=400)
         else:
-            return Response(None)
+            forms = Form.objects.all()
+            forms_serialized = FormSerializer(forms, many=True)
+            return Response(forms_serialized.data)
+
 
     def post(self, request, format=None, **kwargs):
         response = Response()
+        print(request.data)
         serializer = FormSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -28,4 +32,18 @@ class FormsView(APIView):
             response.data = serializer.validated_data
         else:
             response.status_code = 400
+        return response
+
+    def delete(self, request, format=None, **kwargs):
+        response = Response()
+        if kwargs.get("form_id"):
+            form = Form.objects.get(id=kwargs['form_id'])
+            if form:
+                form.delete()
+                response.status_code = 204
+            else:
+                pass
+        else:
+            response.status_code = 400
+
         return response
