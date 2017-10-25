@@ -14,13 +14,13 @@ class TeamView(APIView):
     def get(self, request, format=None, **kwargs):
         #antes pegar o company id para verificar se o time pertence aquela empresa
         if kwargs.get('company_id'):
-        	try:
-        		company = Company.objects.get(id=kwargs['company_id'])
-        	except ObjectDoesNotExist:
-                return Response({"error": "could not find team"}    , status=400)	
+            try:
+                company = Company.objects.get(id=kwargs['company_id'])
+            except ObjectDoesNotExist:
+                return Response({"error": "could not find team"}, status=400)
         if kwargs.get('team_id'):
             try:
-            	#verificar aqui se esse team pertence a company?
+                #verificar aqui se esse team pertence a company?
                 team = Team.objects.get(id=kwargs['team_id'])
                 team_data = TeamSerializer(team)
                 return Response(team_data.data)
