@@ -17,7 +17,7 @@ class TeamView(APIView):
             try:
                 company = Company.objects.get(id=kwargs['company_id'])
             except ObjectDoesNotExist:
-                return Response({"error": "could not find team"}, status=400)
+                return Response({"error": "could not find company"}, status=400)
         if kwargs.get('team_id'):
             try:
                 #verificar aqui se esse team pertence a company?
