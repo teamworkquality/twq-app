@@ -5,7 +5,9 @@ from .models import Team
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = Company
+        fields = '__all__'
 
 class TeamSerializer(serializers.ModelSerializer):
 
