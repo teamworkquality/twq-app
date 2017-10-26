@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 
 from .models import Company
 from .models import Team
-from .serializers import TeamSerializer
+from .serializers import TeamSerializer, CompanySerializer
 
 class TeamView(APIView):
 
@@ -41,3 +41,6 @@ class TeamView(APIView):
         else:
             response.status_code = 400
         return response
+
+class CompanyView(APIView):
+    serializer_class = CompanySerializer
