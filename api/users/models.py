@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-from ..companies.models import Company, Team
 
 class User(AbstractBaseUser):
     full_name = models.CharField(max_length=250, blank=False)
@@ -10,5 +9,5 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = "email"
 
 class Employee(User):
-    company = models.ForeignKey(Company)
-    team = models.ForeignKey(Team, null=True)
+    employer = models.ForeignKey('companies.Company', related_name="employer")
+    team = models.ForeignKey('companies.Team', null=True)
