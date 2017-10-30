@@ -70,3 +70,16 @@ class CompanyView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None, **kwargs):
+        response = Response()
+        if kwargs.get("company_id"):
+            company = Company.objects.get(id=kwargs['company_id'])
+            if company:
+                company.delete()
+                response.status_code = 204
+            else:
+                pass
+        else:
+            response.status_code = 400
+        return response
