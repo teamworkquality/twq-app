@@ -18,5 +18,5 @@ class TeamSerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = ('id', 'full_name', 'is_admin', 'email', 'team', 'company')
-        read_only_fields = ('full_name', 'is_admin', 'email', 'team', 'company')
+        fields = ('id', 'full_name', 'is_admin', 'email', 'team', 'employer')
+        read_only_fields = ('full_name', 'is_admin', 'email', 'team', 'employer')

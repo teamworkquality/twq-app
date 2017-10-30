@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .models import Company
-from .models import Team
+
+from .models import Company, Team, Employee
 from .serializers import TeamSerializer, CompanySerializer, EmployeeSerializer
 
 class TeamView(APIView):
@@ -68,12 +68,12 @@ class EmployeeView(APIView):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
 
         if kwargs.get('team_id'):
-            try:
-                team = Team.objects.get(id=kwargs.get('company_id'))
-            except Team.DoesNotExist:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+            team = Team.objects.get(id=kwargs.get('company_id'))
 
-        employees = Employee.objects.filter(employer=company, team=team)
+        if team:
+            employees = Employee.objects.filter(employer=company, team=team)
+        else:
+            employees = Employee.objects.filter(employer=company)
 
         serializer = Employee(employees, many=True)
         return Response(serializer.data)
