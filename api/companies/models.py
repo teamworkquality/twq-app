@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 class Company(models.Model):
     name = models.CharField(max_length=250, unique=True)
@@ -7,3 +8,7 @@ class Company(models.Model):
 
 class Team(models.Model):
 	name = models.CharField(max_length=250, unique=True)
+
+class Employee(User):
+    employer = models.ForeignKey('companies.Company', related_name="employer")
+    team = models.ForeignKey('companies.Team', null=True)

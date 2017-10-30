@@ -5,7 +5,7 @@ from rest_framework import status
 
 from .models import Company
 from .models import Team
-from .serializers import TeamSerializer, CompanySerializer
+from .serializers import TeamSerializer, CompanySerializer, EmployeeSerializer
 
 class TeamView(APIView):
 
@@ -53,6 +53,33 @@ class CompanyView(APIView):
 
     def post(self, request, format=None):
         serializer = CompanySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EmployeeView(APIView):
+    serializer_class = EmployeeSerializer
+    def get(self, request, format=None, **kwargs):
+        if kwargs.get('company_id'):
+            try:
+                company = Company.objects.get(id=kwargs.get('company_id'))
+            except Company.DoesNotExist:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        if kwargs.get('team_id'):
+            try:
+                team = Team.objects.get(id=kwargs.get('company_id'))
+            except Team.DoesNotExist:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        employees = Employee.objects.filter(employer=company, team=team)
+
+        serializer = Employee(employees, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = EmployeeSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

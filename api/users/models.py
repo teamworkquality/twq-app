@@ -8,6 +8,3 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = "email"
 
-class Employee(User):
-    employer = models.ForeignKey('companies.Company', related_name="employer")
-    team = models.ForeignKey('companies.Team', null=True)

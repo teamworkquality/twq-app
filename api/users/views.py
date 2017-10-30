@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from companies.models import Company, Team
-from users.models import User, Employee
-from users.serializers import UserSerializer, EmployeeSerializer
+from users.models import User
+from users.serializers import UserSerializer
 
 
 class UserView(APIView):
@@ -49,30 +49,3 @@ class UserView(APIView):
             response.status_code = 400
 
         return response
-
-class EmployeeView(APIView):
-    serializer_class = EmployeeSerializer
-    def get(self, request, format=None, **kwargs):
-        if kwargs.get('company_id'):
-            try:
-                company = Company.objects.get(id=kwargs.get('company_id'))
-            except Company.DoesNotExist:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        if kwargs.get('team_id'):
-            try:
-                team = Team.objects.get(id=kwargs.get('company_id'))
-            except Team.DoesNotExist:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        employees = Employee.objects.filter(employer=company, team=team)
-
-        serializer = Employee(employees, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        serializer = EmployeeSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
