@@ -4,10 +4,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Form
 from .serializers import FormSerializer
+from rest_framework.permissions import IsAuthenticated
 
 class FormsView(APIView):
 
     queryset = Form.objects.all()
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None, **kwargs):
         if kwargs.get('form_id'):
