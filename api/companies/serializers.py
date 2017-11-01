@@ -1,14 +1,16 @@
 from rest_framework import serializers
 
-from companies.models import Company
-from companies.models import Team
+from .models import Company
+from .models import Team
 
 
 class CompanySerializer(serializers.ModelSerializer):
-	pass
+    class Meta:
+        model = Company
+        fields = '__all__'
 
 class TeamSerializer(serializers.ModelSerializer):
 
-	class Meta:
+    class Meta:
         model = Team
         fields = '__all__'

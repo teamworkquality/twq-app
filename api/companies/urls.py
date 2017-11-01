@@ -1,8 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
-from users.views import TeamView
+from .views import TeamView, CompanyView
 
 urlpatterns = [
-    url(r'^$', TeamView.as_view(), name="teams"),
-    url(r'^(?P<team_id>\w+)$', UserView.as_view(), name="get_team"),
+    url(r'^(?P<company_id>\w+)/team/$', TeamView.as_view(), name="teams"),
+    url(r'^(?P<company_id>\w+)/team/(?P<team_id>\w+)$', TeamView.as_view(), name="get_team"),
+    url(r'^(?P<company_id>\w+)/forms/', include('forms.urls')),
+    url(r'^$', CompanyView.as_view(), name="companies"),
 ]

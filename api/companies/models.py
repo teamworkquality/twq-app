@@ -6,4 +6,4 @@ class Company(models.Model):
     owner = models.ForeignKey(User)
 
 class Team(models.Model):
-	name = models.CharField(max_lengh=250, unique=True)
+	name = models.CharField(max_length=250, unique=True)
