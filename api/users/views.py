@@ -1,8 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
-from companies.models import Company, Team
 from users.models import User
 from users.serializers import UserSerializer
 
