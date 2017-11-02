@@ -14,11 +14,8 @@ class TeamView(APIView):
 
     def get(self, request, format=None, **kwargs):
         #antes pegar o company id para verificar se o time pertence aquela empresa
-        if kwargs.get('company_id'):
-            try:
-                company = Company.objects.get(id=kwargs['company_id'])
-            except ObjectDoesNotExist:
-                return Response({"error": "could not find company"}, status=400)
+        checkIfCompanyExists(kwargs.get('company_id'))
+
         if kwargs.get('team_id'):
             try:
                 #verificar aqui se esse team pertence a company?
@@ -61,11 +58,7 @@ class CompanyView(APIView):
 class EmployeeView(APIView):
     serializer_class = EmployeeSerializer
     def get(self, request, format=None, **kwargs):
-        if kwargs.get('company_id'):
-            try:
-                company = Company.objects.get(id=kwargs.get('company_id'))
-            except Company.DoesNotExist:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+        checkIfCompanyExists(kwargs.get('company_id'))
 
         if kwargs.get('team_id'):
             team = Team.objects.get(id=kwargs.get('company_id'))
@@ -84,3 +77,12 @@ class EmployeeView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def checkIfCompanyExists(company_id):
+    if company_id:
+        try:
+            company = Company.objects.get(id=company_id)
+            return company
+        except Company.DoesNotExist:
+            return Response({"error": "could not find company"}, status=status.HTTP_400_BAD_REQUEST)
