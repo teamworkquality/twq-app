@@ -8,5 +8,3 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = "email"
 
-class Employee(User):
-    pass
