@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from .models import Company
-from .models import Team
-from .serializers import TeamSerializer, CompanySerializer
+
+from .models import Company, Team, Employee
+from .serializers import TeamSerializer, CompanySerializer, EmployeeSerializer
 
 class TeamView(APIView):
 
@@ -14,11 +14,8 @@ class TeamView(APIView):
 
     def get(self, request, format=None, **kwargs):
         #antes pegar o company id para verificar se o time pertence aquela empresa
-        if kwargs.get('company_id'):
-            try:
-                company = Company.objects.get(id=kwargs['company_id'])
-            except ObjectDoesNotExist:
-                return Response({"error": "could not find company"}, status=400)
+        checkIfCompanyExists(kwargs.get('company_id'))
+
         if kwargs.get('team_id'):
             try:
                 #verificar aqui se esse team pertence a company?
@@ -70,7 +67,7 @@ class CompanyView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+      
     def delete(self, request, format=None, **kwargs):
         response = Response()
         if kwargs.get("company_id"):
@@ -84,3 +81,34 @@ class CompanyView(APIView):
             response.status_code = 400
         return response
 
+class EmployeeView(APIView):
+    serializer_class = EmployeeSerializer
+    def get(self, request, format=None, **kwargs):
+        checkIfCompanyExists(kwargs.get('company_id'))
+
+        if kwargs.get('team_id'):
+            team = Team.objects.get(id=kwargs.get('company_id'))
+
+        if team:
+            employees = Employee.objects.filter(employer=company, team=team)
+        else:
+            employees = Employee.objects.filter(employer=company)
+
+        serializer = Employee(employees, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def checkIfCompanyExists(company_id):
+    if company_id:
+        try:
+            company = Company.objects.get(id=company_id)
+            return company
+        except Company.DoesNotExist:
+            return Response({"error": "could not find company"}, status=status.HTTP_400_BAD_REQUEST)
