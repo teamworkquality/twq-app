@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import User
 from users.serializers import UserSerializer
+from rest_framework.authtoken.models import Token
 
 
 class UserView(APIView):
@@ -23,13 +24,14 @@ class UserView(APIView):
             all_users_serialized = UserSerializer(all_users, many=True)
             return Response(all_users_serialized.data)
 
-    def post(self, request, format=None, **kwargs):
+    def post(self, request, format=None):
         response = Response()
-        new_user = User(**kwargs)
-        new_user.save()
-
-        if new_user:
+        new_user = UserSerializer(data=request.data)
+        if new_user.is_valid():
+            user = new_user.save()
             response.status_code = 201
+            token = Token.objects.create(user=user)
+            response['token'] = token.key
         else:
             response.status_code = 400
         return response
