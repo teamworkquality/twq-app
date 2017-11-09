@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from users.models import User
 from users.serializers import UserSerializer
 from rest_framework.authtoken.models import Token
-
+from django.contrib.auth.hashers import make_password
 
 class UserView(APIView):
 
@@ -26,7 +26,11 @@ class UserView(APIView):
 
     def post(self, request, format=None):
         response = Response()
+        #hashs password for proper safety
+        request.data["password"] = make_password(request.data["password"])
+
         new_user = UserSerializer(data=request.data)
+
         if new_user.is_valid():
             user = new_user.save()
             response.status_code = 201
