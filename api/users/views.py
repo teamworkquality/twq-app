@@ -38,6 +38,7 @@ class UserView(APIView):
             response['token'] = token.key
         else:
             response.status_code = 400
+            response['error'] = new_user.errors
         return response
 
     def delete(self, request, format=None, **kwargs):
