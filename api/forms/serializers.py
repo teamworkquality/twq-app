@@ -5,7 +5,7 @@ from .models import Form, Question
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('text', 'min', 'max', 'reversed')
+        fields = ('text', 'reversed')
 
 class FormSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True)
@@ -13,7 +13,7 @@ class FormSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Form
-        fields = ('name', 'has_time_limit', 'time_limit', 'questions')
+        fields = ('name', 'has_time_limit', 'time_limit', 'questions', 'min', 'max')
 
     def create(self, validated_data):
         questions_data = validated_data.pop('questions')
