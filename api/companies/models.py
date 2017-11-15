@@ -4,7 +4,7 @@ from users.models import Admin
 class Company(models.Model):
     name = models.CharField(max_length=250, unique=True)
     owner = models.ForeignKey('users.Admin')
-    editors = models.ManyToManyField('users.User', related_name="editors")
+    editors = models.ManyToManyField('users.Admin', related_name="editors")
 
 class Team(models.Model):
 	name = models.CharField(max_length=250, unique=True)
