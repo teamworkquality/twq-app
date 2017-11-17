@@ -1,5 +1,6 @@
 import numpy as np
 from analise import analyse as ana
+# import analyse as ana
 
 '''
 createReport(flag, construct_data, construct_info, normality_significance = 0.05)
@@ -192,15 +193,23 @@ def createReport(flag, construct_data, construct_info, normality_significance = 
 
 	if(flag == 0):
 		t = team(construct_data, constructsInfo)
-		return t.getCalculatedData()
+		tData = t.getCalculatedData()
+		# verification if each construct from team is reportable by checking cronbach's alpha
+		tData = [{ "results": construct, "reportable": isConstructReportable(construct[1]) } for construct in tData]
+		return tData
+		# return t.getCalculatedData()
 
 	else: 
-		
 		c = company(construct_data, constructsInfo, normality_significance)
-		return c.getCalculatedData()
+		cData, cTeamsData = c.getCalculatedData()
+		# verification if each construct from company (and also for each team in company) is reportable by checking cronbach's alpha
+		cData = [{ "results": construct, "reportable": isConstructReportable(construct[1]) } for construct in cData[:len(cData) - 2]] + cData[len(cData) - 2:]
+		cTeamsData = [[{ "results": construct, "reportable": isConstructReportable(construct[1]) } for construct in team] for team in cTeamsData]
+		return [cData, cTeamsData]
+		# return c.getCalculatedData()
 
-
-
+def isConstructReportable(cronbachAlpha):
+	return cronbachAlpha >= 0.7
 
 ''' Examples below
 data = np.array([
@@ -231,9 +240,9 @@ data2 = np.array([
 
 ci = np.array([[0,1,"c1"],[2,4,"c2"]])
 
-print(createReport(0, data, ci))
-companyReport =createReport(1, data2, ci) 
-print(companyReport[0])
-print(companyReport[1])
-
+teamData = createReport(0, data, ci)
+print(teamData)
+companyData, companyTeamsData = createReport(1, data2, ci)
+print(companyData)
+print(companyTeamsData)
 '''
