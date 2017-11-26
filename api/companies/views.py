@@ -72,7 +72,8 @@ class CompanyView(APIView):
         response = Response()
         if kwargs.get("company_id"):
             company = Company.objects.get(id=kwargs['company_id'])
-            if company:
+
+            if company.owner.id == kwargs.get("owner_id") and company.editors.filter(kwargs.get("editor_id")):
                 company.delete()
                 response.status_code = 204
             else:
