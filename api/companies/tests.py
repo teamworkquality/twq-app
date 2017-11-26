@@ -99,3 +99,12 @@ class CompanyTest(TestCase):
             new_count = Company.objects.count()
             self.assertNotEqual(old_count, new_count)
 
+            self.response = self.client.delete (
+                reverse("get_company", kwargs={"company_id": 1})
+            )
+
+            # get new amount of form
+            after_delete_count = Company.objects.count()
+            self.assertNotEqual(new_count, after_delete_count)
+
+            self.assertEqual(self.response.status_code, 204)
