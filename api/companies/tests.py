@@ -103,7 +103,7 @@ class CompanyTest(TestCase):
                 reverse("get_company", kwargs={"company_id": 1})
             )
 
-            # get new amount of form
+            # get amount of company after delete
             after_delete_count = Company.objects.count()
             self.assertNotEqual(new_count, after_delete_count)
 
