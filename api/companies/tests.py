@@ -72,7 +72,7 @@ class CompanyTest(TestCase):
         self.assertNotEqual(old_count, after_delete_count)
 
 
-        def est_api_can_delete_company():
+        def test_api_can_delete_company():
             # checking amount of company
             old_count = Company.objects.count()
 
