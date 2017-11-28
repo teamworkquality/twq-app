@@ -5,6 +5,9 @@ from users.models import Admin
 from users.serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
+from rest_framework import status
+
 
 class UserView(APIView):
 
@@ -18,7 +21,7 @@ class UserView(APIView):
                 user_data = UserSerializer(user)
                 return Response(user_data.data)
             except ObjectDoesNotExist:
-                return Response({"error": "could not find user"}    , status=400)
+                return Response({"error": "could not find user"}, status=400)
         else:
             all_users = Admin.objects.all()
             all_users_serialized = UserSerializer(all_users, many=True)
@@ -27,9 +30,10 @@ class UserView(APIView):
     def post(self, request, format=None):
         response = Response()
         #hashs password for proper safety
-        request.data["password"] = make_password(request.data["password"])
+        user_data = request.data.copy()
+        user_data["password"] = make_password(user_data["password"])
 
-        new_user = UserSerializer(data=request.data)
+        new_user = UserSerializer(data=user_data)
 
         if new_user.is_valid():
             user = new_user.save()
@@ -54,3 +58,22 @@ class UserView(APIView):
             response.status_code = 400
 
         return response
+
+
+class LoginView(APIView):
+    def post(self, request, format=None):
+        data = request.data
+
+        username = data.get('username', None)
+        password = data.get('password', None)
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                token = Token.objects.get(user=user).key
+                return Response(status=status.HTTP_200_OK, data={"token": token})
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
