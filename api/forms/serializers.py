@@ -7,6 +7,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ('text', 'reversed')
 
+
 class FormSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True)
     time_limit = serializers.DateTimeField(required=False)
@@ -21,3 +22,10 @@ class FormSerializer(serializers.ModelSerializer):
         for question_data in questions_data:
             Question.objects.create(form=form, **question_data)
         return form
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
+        fields = "__all__"
