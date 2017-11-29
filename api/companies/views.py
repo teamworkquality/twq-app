@@ -1,16 +1,20 @@
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
-
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Company, Team, Employee
 from .serializers import TeamSerializer, CompanySerializer, EmployeeSerializer
+
 
 class TeamView(APIView):
 
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None, **kwargs):
         #antes pegar o company id para verificar se o time pertence aquela empresa
@@ -53,8 +57,12 @@ class TeamView(APIView):
             response.status_code = 400
         return response
 
+
 class CompanyView(APIView):
     serializer_class = CompanySerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, )
+
 
     def get(self, request, format=None):
         companies = Company.objects.all()
@@ -67,7 +75,7 @@ class CompanyView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-      
+
     def delete(self, request, format=None, **kwargs):
         response = Response()
         if kwargs.get("company_id"):
@@ -82,8 +90,10 @@ class CompanyView(APIView):
             response.status_code = 400
         return response
 
+
 class EmployeeView(APIView):
     serializer_class = EmployeeSerializer
+
     def get(self, request, format=None, **kwargs):
         checkIfCompanyExists(kwargs.get('company_id'))
 
